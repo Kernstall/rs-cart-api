@@ -1,0 +1,29 @@
+service: rs-cart-api
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  profile: sandx
+  environment:
+    USER: ${env:USER}
+    HOST: ${env:HOST}
+    PASSWORD: ${env:PASSWORD}
+    DB_NAME: ${env:DB_NAME}
+
+
+functions:
+  main:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '/{proxy+}'
